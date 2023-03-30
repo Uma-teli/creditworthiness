@@ -12,7 +12,7 @@ RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python3
   && pip install --upgrade requests\
   && apk del build-dependencies
 
-#COPY . /app
+COPY . /Mortgage
 
 RUN git clone https://github.com/JeevanNaikOP/CreditWorthinessEvaluation.git
 
