@@ -53,15 +53,32 @@ class basicRevHandler(tornado.web.RequestHandler):
 
 class predictScore(tornado.web.RequestHandler):
     def post(self):
-        base_url = 'https://192.86.32.113:19443/api_fraud_detection/fraudDetection?merchantxname='
+        token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImlibXVzZXIiLCJyb2xlIjoic3lzYWRtIiwidWlkIjoiNTAwMCIsImlhdCI6MTY4MDE2MzM4NCwiZXhwIjoxNjgwMjEwMTg0fQ.msGzfGRLFnc8xH__4_kv8moG8gq6-jJYkprpXNoQRKE4STl8BTYoGf0qLasxAFzJs5uW1q3RXkpz8MeRLQlLlba6fnAKa8C8tuYcFLePC9asGS6EdTNndHHZcKCjSrgMizB2J7f5_KsZCmBURDcthrGm6pUgw3RUdSpq3IVSkTT0YlKXAuStMFEodpbCO_EE6Z7agCYC3q-6we5z56BmmnF-x6I6O8UOrlNugjlE6QJyA9O5YgHo3jcWy7txkgL2gYuE7D6re3jpUMkLM0h0CTnwqpsJhdIKFXIHXp0rFAeOo6oDcRvQU4zMXHLddQbWt8v-Fw_WU0StU2voZWT0Qg"
+
+        base_url = 'http://192.86.32.113:5001/iml/v2/scoring/online/86118501-fc26-4a19-8451-e54b95acae8b'
         #base_url = 'https://gateway.aipc1.cp4i-b2e73aa4eddf9dc566faa4f42ccdd306-0001.us-east.containers.appdomain.cloud/sachinsorg/sandbox/payments/pymntRev?acctId='
         #base_url = 'https://api.eu-gb.apiconnect.appdomain.cloud/m1ganeshtcscom1543928228162-dev/sb/payments/pymntRev?acctId='
         # 100000001001 is the only working answer
-        headers = {'Content-Type': 'application/json'}
+        header = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token}
         #end_url= base_url+str(self.get_body_argument("accnt"))+"&transId="+str(self.get_body_argument("trans"))+"&revAmt="+str(self.get_body_argument("debit_amt"))
-        end_url= base_url+str(self.get_body_argument("mername"))+"&user1="+str(self.get_body_argument("usr"))+"&amount="+str(self.get_body_argument("amt"))+"&merchantxstate="+str(self.get_body_argument("merstate"))+"&usexchip="+str(self.get_body_argument("chip"))+"&errorsx="+str(self.get_body_argument("err"))+"&mcc="+str(self.get_body_argument("mcc"))+"&merchantxcity="+str(self.get_body_argument("mercity"))+"&card="+str(self.get_body_argument("card"))
-        req = requests.get(end_url, headers=headers, auth=('ibmuser', 'ibmuser'), verify=False)
-        json_out = req.json()
+        amt=str(self.get_body_argument("amt"))
+        cnt_children=str(self.get_body_argument("cnt_children"))
+        gender=str(self.get_body_argument("gender"))
+        birth=str(self.get_body_argument("birth"))
+        ext_source_1=str(self.get_body_argument("ext_source_1"))
+        ext_source_2=str(self.get_body_argument("ext_source_2"))
+        graduate=str(self.get_body_argument("graduate"))
+        postgraduate=str(self.get_body_argument("postgraduate"))
+        income_type=str(self.get_body_argument("income_type"))
+        occupation_type=str(self.get_body_argument("occupation_type"))
+        #end_url= base_url+amt+"&user1="+cnt_children+"&amount="+gender+"&merchantxstate="+birth+"&usexchip="+ext_source_1+"&errorsx="+ext_source_2+"&mcc="+graduate+"&merchantxcity="+postgraduate+"&card="+income_type+"&Occupational"+occupaton_type
+        #req = requests.get(end_url, headers=headers, auth=('ibmuser', 'ibmuser'), verify=False)
+        payload_scoring = [{"EXT_SOURCE_2":ext_source_1,"EXT_SOURCE_3":ext_source_2,"DAYS_BIRTH":birth,"CODE_GENDER_M":gender,"NAME_EDUCATION_TYPE_Higher education":graduate,"NAME_EDUCATION_TYPE_Secondary / secondary special":postgraduate,"NAME_INCOME_TYPE_Working":income_type,"AMT_CREDIT":amt,"CNT_CHILDREN":cnt_children,"OCCUPATION_TYPE_Sales staff":occupation_type}]
+        print(payload_scoring)
+        response_scoring = requests.post('http://192.86.32.113:5001/iml/v2/scoring/online/86118501-fc26-4a19-8451-e54b95acae8b', json=payload_scoring, headers=header,verify=False)
+
+        json_out = (json.loads(response_scoring.text))
+
         print("before")
         #print(json_out)
         jsonstruct=json_out
@@ -70,9 +87,9 @@ class predictScore(tornado.web.RequestHandler):
         json_load=json.loads(jsonstruct)
         #print(json_load["MODELOUT"]["MODELOUP"]["PROBABILITYX1X"])
         print("df")
-
-        val1=json_load['MODELOUT']['MODELOUP']['PROBABILITYX1X']
-        val2=json_load['MODELOUT']['MODELOUP']['PROBABILITYX0X']
+        print(json_load)
+        val1=json_load[0]['probability'][0]
+        val2=json_load[0]['probability'][1]
         #print(val1)
         val1=round(val1,16)
         val2=round(val2,16)
@@ -92,7 +109,15 @@ class predictScore(tornado.web.RequestHandler):
         #plt.axis('equal')
         #plt.show()
 
-        self.render("static/result.html",label=labels,color=colors,size=sizes,x1x=json_load['MODELOUT']['MODELOUP']['PROBABILITYX1X'],xox=json_load['MODELOUT']['MODELOUP']['PROBABILITYX0X'],bloc="predictScore", jsonstruct=jsonstruct)
+        self.render("static/result.html",label=labels,color=colors,size=sizes,x1x=json_load[0]['probability'][0],xox=json_load[0]['probability'][1],bloc="predictScore", jsonstruct=jsonstruct,
+                    amt=amt,
+                    cnt_children=cnt_children,
+                    gender=gender,birth=birth,
+                    ext_source_1=ext_source_1,
+                    ext_source_2=ext_source_2,graduate=graduate,
+                    postgraduate=postgraduate,
+                    income_type=income_type,
+                    occupation_type=occupation_type)
         
 
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mortgage Calc</title>
+    <title>Credit Evaluation</title>
     <!--<link href="style.css" rel="stylesheet" >-->
     <style>
          .mort-calculator {
@@ -130,23 +130,23 @@
     
     <div class="mort-calculator">
         <div class="top">
-            <h2>Mortgage Calculator</h2>
+            <h2>Credit Worthiness</h2>
 
             <form action="predictScore" method="POST">
                 <div class="group">
                     <div class="title">Amount</div>
-                    <input type="text" value="2.814210" name="amt" class="mort-amount" />
+                    <input type="text" value={{amt}} name="amt" class="mort-amount" />
                 </div>
 
                 <div class="group">
-                    <div class="title">Card</div>
-                    <input type="text" value="1" name="card" class="interest-rate" />
+                    <div class="title">cnt_children</div>
+                    <input type="text" value={{cnt_children}} name="cnt_children" class="interest-rate" />
                 </div>
 
 
                 <div class="group">
-                    <div class="title">Errors</div>
-                    <input type="text" value="0" name="err" class="mort-tenure" />
+                    <div class="title">gender</div>
+                    <input type="text" value={{gender}} name="gender" class="mort-tenure" />
                 </div>
 
                 
@@ -158,40 +158,46 @@
         <div class="result">
             <div class="left">
                 <div class="mort-emi">
-                    <h3>MCC</h3>
+                    <h3>birth</h3>
                    <!--- <div class="value">123</div>-->
-                    <input type="text" value="75" name="mcc" class="value" />
+                    <input type="text" value={{birth}} name="birth" class="value" />
                 </div>
 
                 <div class="total-interest">
-                    <h3>Merchant City</h3>
+                    <h3>ext_source_1</h3>
                    <!-- <div class="value">486</div>-->
-                    <input type="text" value="486" name="mercity" class="value" />
+                    <input type="text" value={{ext_source_1}} name="ext_source_1" class="value" />
                 </div>
 
 
                 <div class="total-amount">
-                    <h3>Merchant Name</h3>
+                    <h3>ext_source_2</h3>
                   <!--  <div class="value">25679</div>-->
-                    <input type="text" value="25679"  name="mername" class="value" />
+                    <input type="text" value={{ext_source_2}}  name="ext_source_2" class="value" />
                 </div>
 
                 <div class="total-amount">
-                    <h3>Merchant State</h3>
+                    <h3>graduate</h3>
                   <!--  <div class="value">64</div>-->
-                    <input type="text" value="64" name="merstate"class="value" />
+                    <input type="text" value={{graduate}} name="graduate"class="value" />
                 </div>
 
                 <div class="total-amount">
-                    <h3>Use Chip</h3>
+                    <h3>postgraduate</h3>
                   <!--- <div class="value">2</div>-->
-                    <input type="text" value="2" name="chip" class="value" />
+                    <input type="text" value={{postgraduate}} name="postgraduate" class="value" />
                 </div>
 
                 <div class="total-amount">
                     <h3>User</h3>
                    <!-- <div class="value">1</div>-->
-                    <input type="text" value="1" name="usr" class="value" />
+                    <input type="text" value={{income_type}} name="income_type" class="value" />
+                </div>
+
+                <div class="total-amount">
+                    <h3>occupation_type</h3>
+                   <!-- <div class="value">1</div>-->
+                    <input type="text" value={{occupation_type}} name="occupation_type" class="value" />
                 </div>
 
 
