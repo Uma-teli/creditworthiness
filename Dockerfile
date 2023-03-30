@@ -4,7 +4,7 @@ FROM python:3-alpine
 
 WORKDIR /Mortgage
 
-RUN apk --update add python3 py3-pip openssl ca-certificates py-openssl wget linux-headers
+RUN apk --update add python3 py3-pip openssl ca-certificates py-openssl wget git linux-headers
 RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python3-dev py3-pip build-base \
   && pip install --upgrade pip \
   && pip install --upgrade pipenv\
