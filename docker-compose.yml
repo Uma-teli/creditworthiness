@@ -1,11 +1,13 @@
 version: '3'
 services:
-  Credit_Worthiness:
+  credit_worthiness:
     env_file: .env
-    container_name: Credit_Worthiness
+    container_name: credit_worthiness
     build:
       context: .
       dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
     environment:
       USERNAME: ${USERNAME}
       PASSWORD: ${PASSWORD}
