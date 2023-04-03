@@ -125,7 +125,10 @@ class predictScore(tornado.web.RequestHandler):
         else:
             outVal = 'Yes'
 
-        self.render("static/result.html",label=labels,color=colors,size=sizes,x1x=json_load[0]['probability'][1]*100,xox=json_load[0]['probability'][0]*100,bloc="predictScore", jsonstruct=jsonstruct,
+        x1x = round(json_load[0]['probability'][1],6)*100
+        x0x = round(json_load[0]['probability'][0],6)*100
+
+        self.render("static/result.html",label=labels,color=colors,size=sizes,x1x=x1x,xox=x0x,bloc="predictScore", jsonstruct=jsonstruct,
                     amt=amt,
                     cnt_children=cnt_children,
                     gender=gender,birth=birth,
