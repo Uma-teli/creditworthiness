@@ -120,8 +120,12 @@ class predictScore(tornado.web.RequestHandler):
         #plt.pie(sizes,labels=labels, colors=colors, startangle=90, autopct='%1.1f%%')
         #plt.axis('equal')
         #plt.show()
+        if json_load[0]['prediction']:
+            outVal = 'No'
+        else:
+            outVal = 'Yes'
 
-        self.render("static/result.html",label=labels,color=colors,size=sizes,x1x=json_load[0]['probability'][0],xox=json_load[0]['probability'][1],bloc="predictScore", jsonstruct=jsonstruct,
+        self.render("static/result.html",label=labels,color=colors,size=sizes,x1x=json_load[0]['probability'][0]*100,xox=json_load[0]['probability'][1]*100,bloc="predictScore", jsonstruct=jsonstruct,
                     amt=amt,
                     cnt_children=cnt_children,
                     gender=gender,birth=birth,
@@ -129,7 +133,8 @@ class predictScore(tornado.web.RequestHandler):
                     ext_source_2=ext_source_2,graduate=graduate,
                     postgraduate=postgraduate,
                     income_type=income_type,
-                    occupation_type=occupation_type)
+                    occupation_type=occupation_type,
+                    outVal=outVal)
         
 
 
