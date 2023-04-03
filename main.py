@@ -53,7 +53,19 @@ class basicRevHandler(tornado.web.RequestHandler):
 
 class predictScore(tornado.web.RequestHandler):
     def post(self):
-        token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImlibXVzZXIiLCJyb2xlIjoic3lzYWRtIiwidWlkIjoiNTAwMCIsImlhdCI6MTY4MDE2MzM4NCwiZXhwIjoxNjgwMjEwMTg0fQ.msGzfGRLFnc8xH__4_kv8moG8gq6-jJYkprpXNoQRKE4STl8BTYoGf0qLasxAFzJs5uW1q3RXkpz8MeRLQlLlba6fnAKa8C8tuYcFLePC9asGS6EdTNndHHZcKCjSrgMizB2J7f5_KsZCmBURDcthrGm6pUgw3RUdSpq3IVSkTT0YlKXAuStMFEodpbCO_EE6Z7agCYC3q-6we5z56BmmnF-x6I6O8UOrlNugjlE6QJyA9O5YgHo3jcWy7txkgL2gYuE7D6re3jpUMkLM0h0CTnwqpsJhdIKFXIHXp0rFAeOo6oDcRvQU4zMXHLddQbWt8v-Fw_WU0StU2voZWT0Qg"
+        header = {
+            'Content-Type': 'application/json',
+            'Control': 'no-cache',
+        }
+
+        json_data = {
+            'username' : os.getenv("USERNAME"),
+            'password' : os.getenv("PASSWORD"),
+        }
+
+        response = requests.post('https://192.86.32.113:9888/auth/generateToken', json=json_data, headers=header,verify=False)
+
+        token = json.loads(response.text)['token']
 
         base_url = 'http://192.86.32.113:5001/iml/v2/scoring/online/86118501-fc26-4a19-8451-e54b95acae8b'
         #base_url = 'https://gateway.aipc1.cp4i-b2e73aa4eddf9dc566faa4f42ccdd306-0001.us-east.containers.appdomain.cloud/sachinsorg/sandbox/payments/pymntRev?acctId='
