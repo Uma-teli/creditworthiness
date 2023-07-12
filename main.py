@@ -61,8 +61,9 @@ class predictScore(tornado.web.RequestHandler):
     def post(self):
         
         headers={'Content-Type': 'application/json', 'Control' : 'no-cache',}
-        json_data={'USERNAME':os.getenv("USERNAME"),'PASSWORD':os.getenv("PASSWORD"),}
-        #json_data={'username' : 'ibmuser', 'password' : 'tcs2042',}
+        #json_data={'USERNAME':os.getenv("USERNAME"),'PASSWORD':os.getenv("PASSWORD"),}  
+        #print(json_data)
+        json_data={'username' : 'ibmuser', 'password' : 'tcs2043',}
         response=requests.post('https://192.86.32.113:9888/auth/generateToken', headers=headers,json=json_data,verify=False)
         token=json.loads(response.text)['token']
         
