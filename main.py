@@ -63,11 +63,11 @@ class predictScore(tornado.web.RequestHandler):
         headers={'Content-Type': 'application/json', 'Control' : 'no-cache',}
         #json_data={'USERNAME':os.getenv("USERNAME"),'PASSWORD':os.getenv("PASSWORD"),}  
         #print(json_data)
-        json_data={'username' : 'ibmuser', 'password' : 'tcs2043',}
+        json_data={'username' : 'ibmuser', 'password' : 'tcs2044',}
         #print(json_data)
         response=requests.post('https://192.86.32.113:9888/auth/generateToken', headers=headers,json=json_data,verify=False)
         token=json.loads(response.text)['token']
-        
+        print(token)
         #token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImlibXVzZXIiLCJyb2xlIjoic3lzYWRtIiwidWlkIjoiNTAwMCIsImlhdCI6MTY4MDUwNDkzNywiZXhwIjoxNjgwNTUxNzM3fQ.inI8sfW2HHKRv8sklsFBYx6IxupKF5rpro1cm3IlSLfxknEZ-PjscDCwOEg1cF8M7LPDlNiFfMwccjBij8qBFlYEEOAQiq_Pc11UrCQJ0iHfpt1bXLyOYu1cieVgqe4NFqqA6HhuzJj-0qWbjdAREkw_C9pHYggreU656w0WqLpTABtq6cmIeuQ1xyTU1HvvfXHJzKe6FWRUQsm4s_EIgf4WzbhrGw34nr9gdaG_pcH30eqflA6wrYB5dVD4HKFzwEtYaVCO_xhZT_39PRRA9tFa8N5KNb2lR7Ttx-oEP3fpipMyrYgAeAeqoxtjQsTKXVOVw_iBu38h2qU1H2IkpA"
         #print(token)
         #base_url = 'http://192.86.32.113:5001/iml/v2/scoring/online/86118501-fc26-4a19-8451-e54b95acae8b'
