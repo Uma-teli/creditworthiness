@@ -62,13 +62,9 @@ class predictScore(tornado.web.RequestHandler):
         
         headers={'Content-Type': 'application/json', 'Control' : 'no-cache',}
         #json_data={'USERNAME':os.getenv("USERNAME"),'PASSWORD':os.getenv("PASSWORD"),}  
-<<<<<<< HEAD
         #print(json_data)
         json_data={'username' : 'ibmuser', 'password' : 'tcs2049',}
         #print(json_data)
-=======
-        json_data={'username' : 'ibmuser', 'password' : 'tcs2047',}
->>>>>>> 3cebbf7d86899cf1369b4aee8e61298f267d5c73
         response=requests.post('https://192.86.32.113:9888/auth/generateToken', headers=headers,json=json_data,verify=False)
         token=json.loads(response.text)['token']
         #print(token)
@@ -94,14 +90,10 @@ class predictScore(tornado.web.RequestHandler):
         #req = requests.get(end_url, headers=headers, auth=('ibmuser', 'ibmuser'), verify=False)
         payload_scoring = [{"EXT_SOURCE_2":ext_source_1,"EXT_SOURCE_3":ext_source_2,"DAYS_BIRTH":birth,"CODE_GENDER_M":gender,"NAME_EDUCATION_TYPE_Higher education":graduate,"NAME_EDUCATION_TYPE_Secondary / secondary special":postgraduate,"NAME_INCOME_TYPE_Working":income_type,"AMT_CREDIT":amt,"CNT_CHILDREN":cnt_children,"OCCUPATION_TYPE_Sales staff":occupation_type}]
         print(payload_scoring)
-<<<<<<< HEAD
         response_scoring = requests.post('http://192.86.32.113:5001/iml/v2/scoring/online/0a2443f6-e896-450d-8be1-af2108a69ba6', json=payload_scoring, headers=header,verify=False)
-
-=======
         #response_scoring = requests.post('http://192.86.32.113:5001/iml/v2/scoring/online/74d51bb6-8831-49a0-bd75-0d3e8d1e5058', json=payload_scoring, headers=header,verify=False)
-        response_scoring = requests.post('http://192.86.32.113:5001/iml/v2/scoring/online/5075a4d6-2ded-4aaf-8c59-bae43fc9f1c8', json=payload_scoring, headers=header,verify=False)
+        #response_scoring = requests.post('http://192.86.32.113:5001/iml/v2/scoring/online/5075a4d6-2ded-4aaf-8c59-bae43fc9f1c8', json=payload_scoring, headers=header,verify=False)
  
->>>>>>> 3cebbf7d86899cf1369b4aee8e61298f267d5c73
         json_out = (json.loads(response_scoring.text))
 
         print("before")
